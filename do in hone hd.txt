@@ -1,0 +1,15 @@
+javac --release 21 -d . -cp $(hadoop classpath) Process.java
+
+jar -cvf Process.jar *.class
+hdfs dfs -rm -r /user/mayank/hd/input
+hdfs dfs -mkdir -p /user/mayank/hd/input
+
+hdfs dfs -put ~/hd/input/data.txt /user/mayank/hd/input/
+
+hdfs dfs -rm -r /user/mayank/hd/outputput
+
+
+
+yarn jar Process.jar Process /user/mayank/hd/input /user/mayank/hd/output
+
+hdfs dfs -cat /user/mayank/hd/output/part-*
